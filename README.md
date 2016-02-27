@@ -140,7 +140,16 @@ taringa.post.create(title,body,category,tags,thumbnail);
                         
 
 ```
+##TESTING
 
+Para correr los tests, hacer
+```bash
+
+USER=user:passwprd npm test
+
+```
+
+Cuidado que los tests se corren sobre el usuario seleccionado. Por ahora son sólo GET, pero cuando se hagan los POSTS, también se harán los DELETE para que no quede rastro.
 
 ##TODO
 * Comentar el código
