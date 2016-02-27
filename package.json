@@ -4,7 +4,8 @@
   "description": "Taringa + NodeJS",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --reporter spec test/runner.js"
+    "test": "mocha --reporter spec test/runner.js",
+    "doc": "yuidoc -c yuidoc.json ."
   },
   "repository": {
     "type": "git",
@@ -28,6 +29,7 @@
   },
   "devDependencies": {
     "mocha": "^2.4.5",
-    "should": "^8.2.2"
+    "should": "^8.2.2",
+    "yuidocjs": "^0.10.0"
   }
 }

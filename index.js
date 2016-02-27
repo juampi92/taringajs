@@ -23,7 +23,7 @@ module.exports = (function() {
       this.user_key = '';
       this.realtime_data = null;
       /**
-       * @property request
+       * @attribute request
        * @type {request}
        */
       this.request = request.defaults({

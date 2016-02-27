@@ -152,6 +152,18 @@ USER=user:passwprd npm test
 
 Cuidado que los tests se corren sobre el usuario seleccionado. Por ahora son sólo GET, pero cuando se hagan los POSTS, también se harán los DELETE para que no quede rastro.
 
+##DOCUMENTACION
+
+Para generar la documentación, correr
+```bash
+
+npm run doc
+
+```
+
+Generará una carpeta con una página estática en la carperta /doc con la documentación de la API.
+
+
 ##TODO
 
 * Añadir funcionalidades para los post

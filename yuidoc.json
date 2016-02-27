@@ -1,0 +1,8 @@
+{
+  "name": "Taringa JS",
+  "description": "Taringa API interfaz para Nodejs",
+  "url": "http://example.com/",
+  "options": {
+    "outdir": "./doc"
+  }
+}
