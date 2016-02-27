@@ -1,29 +1,66 @@
 var request = require('request'),
+  util = require('util'),
   EventEmitter = require('events').EventEmitter,
   _ = require('lodash');
 
+module.exports = (function() {
 
-module.exports = (function(superClass) {
-  _.extend(Taringa, superClass);
-
+  /**
+   * Taringa user API
+   * @class Taringa
+   * @extends {EventEmitter}
+   * @constructor
+   * @param  {String} username
+   * @param  {String} password
+   */
   function Taringa(username, password) {
+    EventEmitter.apply(this);
+
     if ((username !== null) && (password !== null)) {
       this.username = username;
       this.password = password;
       this.user_id = '';
       this.user_key = '';
       this.realtime_data = null;
+      /**
+       * @property request
+       * @type {request}
+       */
       this.request = request.defaults({
         headers: {
           'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; rv:31.0) Gecko/20100101 Firefox/31.0'
         },
         jar: request.jar()
       });
+      /**
+       * @attribute shout
+       * @type {Shout}
+       */
       this.register('shout');
+      /**
+       * @attribute user
+       * @type {User}
+       */
       this.register('user');
+      /**
+       * @attribute kn3
+       * @type {Kn3}
+       */
       this.register('kn3');
+      /**
+       * @attribute message
+       * @type {Message}
+       */
       this.register('message');
+      /**
+       * @attribute post
+       * @type {Post}
+       */
       this.register('post');
+      /**
+       * @attribute notification
+       * @type {Notification}
+       */
       this.register('notification');
 
       this.login();
@@ -32,10 +69,24 @@ module.exports = (function(superClass) {
     }
   }
 
+  util.inherits(Taringa, EventEmitter);
+
+  /**
+   * Console logs messages
+   * @method log
+   * @param  {String} msg
+   * @chainable
+   */
   Taringa.prototype.log = function(msg) {
-    return console.log(msg);
+    console.log(msg);
+    return this;
   };
 
+  /**
+   * Login
+   *   Emits: 'logged'
+   * @method login
+   */
   Taringa.prototype.login = function() {
     var self = this,
       fields = {
@@ -68,6 +119,11 @@ module.exports = (function(superClass) {
     return this[libName];
   };
 
+  /**
+   * Emits: 'logged'
+   * @method store_user_data
+   * @private
+   */
   Taringa.prototype.store_user_data = function() {
     var self = this;
 
@@ -102,4 +158,4 @@ module.exports = (function(superClass) {
 
   return Taringa;
 
-})(EventEmitter);
+})();

@@ -58,7 +58,7 @@ taringa.shout.reshout(60544255,19963011); // shout_id, shout_owner_id
 
 ###Obtener los datos de un shout utilizando el id
 ```javascript
-taringa.shout.get_object(60544255, function(err, data) {
+taringa.shout.get(60544255, function(err, data) {
     if (err) {
         return console.log(err);
     }
@@ -78,7 +78,7 @@ taringa.kn3.import("https://i.imgur.com/s8yBeZ8.png", function(err, data) {
 
 ###Obtener los datos de un usuario según el nick
 ```javascript
-taringa.user.get_user_id_from_nick("overjt", function(err, data) {
+taringa.user.getUserFromNick("overjt", function(err, data) {
     if (err) {
         return console.log(err);
     }
