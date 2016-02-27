@@ -1,16 +1,13 @@
-var EventEmitter, Taringa, request,
-  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-  hasProp = {}.hasOwnProperty;
+var request = require('request'),
+  EventEmitter = require('events').EventEmitter,
+  _ = require('lodash');
 
-request = require('request');
 
-EventEmitter = require('events').EventEmitter;
-
-Taringa = (function(superClass) {
-  extend(Taringa, superClass);
+module.exports = (function(superClass) {
+  _.extend(Taringa, superClass);
 
   function Taringa(username, password) {
-    if ((username != null) && (password != null)) {
+    if ((username !== null) && (password !== null)) {
       this.username = username;
       this.password = password;
       this.user_id = '';
@@ -28,7 +25,7 @@ Taringa = (function(superClass) {
       this.register('message');
       this.register('post');
       this.register('notification');
-      
+
       this.login();
     } else {
       throw new Error("Not enough parameters provided. I need a username, a password");
@@ -40,16 +37,16 @@ Taringa = (function(superClass) {
   };
 
   Taringa.prototype.login = function() {
-    var fields, self;
-    self = this;
-    fields = {
-      form: {
-        nick: this.username,
-        pass: this.password,
-        redirect: '/',
-        connect: ''
-      }
-    };
+    var self = this,
+      fields = {
+        form: {
+          nick: this.username,
+          pass: this.password,
+          redirect: '/',
+          connect: ''
+        }
+      };
+
     return this.request.post('http://www.taringa.net/registro/login-submit.php', fields, function(error, response, body) {
       var data;
       if (!error && response.statusCode === 200) {
@@ -66,30 +63,30 @@ Taringa = (function(superClass) {
   };
 
   Taringa.prototype.register = function(libName) {
-    var lib;
-    lib = require('./lib/' + libName);
-    return this[libName] = new lib(this);
+    var Lib = require('./lib/' + libName);
+    this[libName] = new Lib(this);
+    return this[libName];
   };
 
   Taringa.prototype.store_user_data = function() {
-    var self;
-    self = this;
+    var self = this;
+
     return this.request('http://www.taringa.net/', function(error, response, body) {
       var match, pattern;
       if (!error && response.statusCode === 200) {
         pattern = /var global_data = { user: \'(.*)\', user_key: \'(.*)\', postid/;
         match = pattern.exec(body);
-        if ((match != null) && match.length === 3 && match[1] !== '' && match[2] !== '') {
+        if ((match !== null) && match.length === 3 && match[1] !== '' && match[2] !== '') {
           self.user_id = match[1];
           self.user_key = match[2];
           pattern = /new Realtime\({\"host\":\"(.*?)\",\"port\":(\d+),\"useSSL\":true}(?:[^]+) notifications\('([a-z0-9]+)',/i;
           match = pattern.exec(body);
-          if ((match != null) && match.length === 4) {
+          if ((match !== null) && match.length === 4) {
             self.realtime_data = {
               "ip": match[1],
               "port": match[2],
               "hash": match[3]
-            }
+            };
             return self.emit('logged');
           } else {
             throw new Error("Login failed: Request was not succesful- Realtime");
@@ -106,5 +103,3 @@ Taringa = (function(superClass) {
   return Taringa;
 
 })(EventEmitter);
-
-module.exports = Taringa;
