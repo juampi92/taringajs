@@ -128,15 +128,16 @@ Todos los ejemplos están en el archivo `test/test.js`
 
 ```javascript
 
-var title = 'Posteo algo y te lo muestro';
-var body = "[img]https://k60.kn3.net/taringa/9/5/0/0/6/4//xxx_555/BA9.jpg[/img]";
-var category = 1;
-var tags = "imagenes, gif, random, taringa";
+var options = {
+    title: 'Posteo algo y te lo muestro',
+    body: "[img]https://k60.kn3.net/taringa/9/5/0/0/6/4//xxx_555/BA9.jpg[/img]",
+    category: 1,
+    tags: "imagenes, gif, random, taringa",
+    //el thumbnail debe ser una imagen de kn3
+    thumbnail: "https://k60.kn3.net/taringa/9/5/0/0/6/4//xxx_555/BA9.jpg"
+};
 
-//el thumbnail debe ser una imagen de kn3
-var thumbnail ="https://k60.kn3.net/taringa/9/5/0/0/6/4//xxx_555/BA9.jpg";
-
-taringa.post.create(title,body,category,tags,thumbnail); 
+taringa.post.create(options);
                         
 
 ```
@@ -152,10 +153,9 @@ USER=user:passwprd npm test
 Cuidado que los tests se corren sobre el usuario seleccionado. Por ahora son sólo GET, pero cuando se hagan los POSTS, también se harán los DELETE para que no quede rastro.
 
 ##TODO
-* Comentar el código
+
 * Añadir funcionalidades para los post
-
-
-
-
-
+* Pasar a usar Promesas en vez de callbacks
+* Mejorar el motor de log
+* Mejorar la API de algunos metodos
+* Constantes para Categorias y tipos de Shouts
