@@ -7,7 +7,7 @@ module.exports = function(instance) {
     it('should download and check ', function(done) {
       this.timeout(15000);
 
-      instance.shout.get(68970580).then(function(shout) {
+      instance.shout.get(68970580).then(function(success, shout) {
         shout.owner.id.should.be.equal(21271542);
         done();
       }, function(err) {
@@ -19,12 +19,13 @@ module.exports = function(instance) {
     it('should like a shout ', function(done) {
       this.timeout(15000);
 
-      instance.shout.like(68982830).then(function(success, responseCode) {
+      instance.shout.like(68982830).then(function(success, message, response) {
         if (success) {
           done();
         } else {
           // The user may have liked the shout already
-          console.log('You have already liked that shout? Response: ', responseCode);
+          console.error('You have already liked that shout? Response: ', message);
+          done();
         }
       }, function(err) {
         throw new Error(err);

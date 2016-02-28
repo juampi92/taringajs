@@ -23,8 +23,8 @@
   },
   "homepage": "https://github.com/overjt/taringajs",
   "dependencies": {
+    "jquery-deferred": "^0.3.0",
     "lodash": "^3.10.1",
-    "node-promise": "^0.5.12",
     "request": "^2.40.0"
   },
   "devDependencies": {
