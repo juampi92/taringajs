@@ -7,10 +7,40 @@ module.exports = function(instance) {
     it('should download and check ', function(done) {
       this.timeout(15000);
 
-      instance.shout.get(68970580, function(err, shout) {
-        err.should.not.be.ok;
+      instance.shout.get(68970580).then(function(shout) {
         shout.owner.id.should.be.equal(21271542);
         done();
+      }, function(err) {
+        throw new Error(err);
+      });
+
+    });
+
+    it('should like a shout ', function(done) {
+      this.timeout(15000);
+
+      instance.shout.like(68982830).then(function(success, responseCode) {
+        if (success) {
+          done();
+        } else {
+          // The user may have liked the shout already
+          console.log('You have already liked that shout? Response: ', responseCode);
+        }
+      }, function(err) {
+        throw new Error(err);
+      });
+    });
+
+    it('should unlike a shout ', function(done) {
+      instance.shout.unlike(68982830).then(function(success) {
+        if (success) {
+          done();
+        } else {
+          // The user MUST have liked the shout in the previous test
+          throw new Error('There was an error disliking that shout');
+        }
+      }, function(err) {
+        throw new Error(err);
       });
 
     });

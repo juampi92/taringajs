@@ -18,6 +18,8 @@ describe('Login', function() {
     this.timeout(50000);
 
     var instance = new Taringa(user.name, user.pw);
+    instance.LOGGING.DISABLED = true;
+    
     instance.on('logged', function() {
 
       instance.user_id.should.be.a.String();

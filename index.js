@@ -33,6 +33,9 @@ module.exports = (function() {
         jar: request.jar()
       });
       /**
+       * REGISTER MODULES
+       */
+      /**
        * @attribute shout
        * @type {Shout}
        */
@@ -63,6 +66,24 @@ module.exports = (function() {
        */
       this.register('notification');
 
+      /**
+       * REGISTER LOG PROPERTIES
+       */
+      /**
+       * @property LOGGING
+       * @type {Object}
+       */
+      this.LOGGING = {
+        /**
+         * Log or not errors or messages
+         * @property LOGGING.DISABLED
+         * @type {Boolean}
+         * @default false
+         */
+        DISABLED: false
+      };
+
+      // Login right away
       this.login();
     } else {
       throw new Error("Not enough parameters provided. I need a username, a password");
@@ -74,11 +95,26 @@ module.exports = (function() {
   /**
    * Console logs messages
    * @method log
-   * @param  {String} msg
+   * @param  {String} ...msg
    * @chainable
    */
-  Taringa.prototype.log = function(msg) {
-    console.log(msg);
+  Taringa.prototype.log = function() {
+    if (!this.LOGGING.DISABLED) {
+      console.log.apply(console, arguments);
+    }
+    return this;
+  };
+
+  /**
+   * Log error messages
+   * @method error
+   * @param {String} ...msg
+   * @chainable
+   */
+  Taringa.prototype.error = function() {
+    if (!this.LOGGING.DISABLED) {
+      console.error.apply(console, arguments);
+    }
     return this;
   };
 
@@ -113,6 +149,13 @@ module.exports = (function() {
     });
   };
 
+  /**
+   * Register a library into the instance
+   * @method register
+   * @param  {String} libName
+   * @return {Library Instance}
+   * @private
+   */
   Taringa.prototype.register = function(libName) {
     var Lib = require('./lib/' + libName);
     this[libName] = new Lib(this);
