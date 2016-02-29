@@ -28,6 +28,8 @@ describe('Login', function() {
       done();
 
       // Call here the rest of the tests
+      require('./post.test.js')(instance);
+      require('./user.test.js')(instance);
       require('./shout.test.js')(instance);
 
     });
