@@ -166,7 +166,8 @@ Generará una carpeta con una página estática en la carperta /doc con la docum
 
 ##TODO
 
-* Añadir funcionalidades para los post
+
+* Migrar a Taringa API: [http://api.taringa.net/docs/taringa/methods/home.html](docs)
 * Pasar a usar Promesas en vez de callbacks
 * Mejorar el motor de log
 * Mejorar la API de algunos metodos
